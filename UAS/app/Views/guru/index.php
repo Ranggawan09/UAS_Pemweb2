@@ -53,6 +53,9 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <?= $pager->links('guru', 'siswa_pager'); ?>
+    </div>
 </div>
 <!-- /.container-fluid -->
 

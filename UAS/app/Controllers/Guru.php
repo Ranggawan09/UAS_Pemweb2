@@ -7,12 +7,13 @@ use App\Models\M_Guru;
 
 class Guru extends BaseController
 {
-    protected $guru_m;
+    protected $guru_m, $pager;
 
     public function __construct()
     {
         $this->guru_m = new M_Guru();
         helper('sn');
+        $this->pager = \Config\Services::pager();
     }
 
     public function index()
@@ -20,7 +21,9 @@ class Guru extends BaseController
 
         $data = [
             'judul' => 'Data Guru',
-            'guru' => $this->guru_m->getAllData()
+            //'guru' => $this->guru_m->getAllData()
+            'guru' => $this->guru_m->paginate('10', 'guru'),
+            'pager' => $this->guru_m->pager
         ];
         // load view
         tampilan('guru/index', $data);

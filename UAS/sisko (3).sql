@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Jun 2024 pada 05.50
+-- Waktu pembuatan: 19 Jun 2024 pada 13.15
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.0.30
 
@@ -105,7 +105,12 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `succ
 (14, '::1', 'rangga@gmail.com', 3, '2024-06-14 11:08:25', 1),
 (15, '::1', 'rangga@gmail.com', 3, '2024-06-14 13:49:45', 1),
 (16, '::1', 'rangga@gmail.com', 3, '2024-06-14 15:35:28', 1),
-(17, '::1', 'rangga@gmail.com', 3, '2024-06-15 14:00:03', 1);
+(17, '::1', 'rangga@gmail.com', 3, '2024-06-15 14:00:03', 1),
+(18, '::1', 'rangga@gmail.com', 3, '2024-06-19 04:15:38', 1),
+(19, '::1', 'rangga@gmail.com', 3, '2024-06-19 04:30:39', 1),
+(20, '::1', 'rangga@gmail.com', 3, '2024-06-19 05:55:54', 1),
+(21, '::1', 'rangga@gmail.com', 3, '2024-06-19 06:51:05', 1),
+(22, '::1', 'rangga@gmail.com', 3, '2024-06-19 07:10:45', 1);
 
 -- --------------------------------------------------------
 
@@ -177,14 +182,7 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`id`, `gambar`, `nip`, `nama`) VALUES
-(6, 'default.png', '64698853', 'Catalina Tromp I'),
-(7, 'default.png', '81828787', 'Ms. Cassandre Jaskolski III'),
-(8, 'default.png', '50970089', 'Prof. Johnny Heidenreich'),
-(9, 'default.png', '28355834', 'Adan Muller'),
-(10, 'default.png', '46571950', 'Cheyenne Abshire'),
-(11, 'default.png', '68577725', 'Laurine Muller'),
-(12, 'default.png', '22722426', 'Alexandre Labadie'),
-(13, 'default.png', '99155831', 'Dr. Terrill Connelly DVM'),
+(13, '1718782141_3f51864ffae20d8942f1.png', '99155831', 'Dr. Terrill Connelly'),
 (14, 'default.png', '24421184', 'Ms. Bethany Purdy Sr.'),
 (15, 'default.png', '61846866', 'Vincenza Berge'),
 (16, 'default.png', '65164057', 'Mrs. Maeve Gislason'),
@@ -222,7 +220,7 @@ INSERT INTO `guru` (`id`, `gambar`, `nip`, `nama`) VALUES
 (48, 'default.png', '29685136', 'Tremayne Padberg'),
 (49, 'default.png', '64399951', 'Jake Pouros DVM'),
 (50, 'default.png', '39004668', 'Kayla Hagenes DVM'),
-(51, 'default.png', '1', '111');
+(52, '1718783715_70e4231fd51fbd4158b2.png', '1233', 'Abu Nawaz');
 
 -- --------------------------------------------------------
 
@@ -271,10 +269,9 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id`, `nisn`, `nama`, `nama_ayah`, `nama_ibu`, `pekerjaan_ayah`, `pekerjaan_ibu`, `penghasilan_ayah`, `penghasilan_ibu`, `telepon`) VALUES
-(11, '0035159553', '\\ra', 'sds', '', '', '', '', '', ''),
+(11, '003515', 'ira wahyu', 'Agung', '', '', '', '', '', ''),
 (23, '003515955411', 'Rangga Hermawan', '', '', '', '', '', '', ''),
-(26, '12332', 'asterix', '', '', '', '', '', '', ''),
-(28, '123', 'asterix12', '', '', '', '', '', '', '');
+(28, '1234', 'asterix12', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -419,7 +416,7 @@ ALTER TABLE `auth_groups`
 -- AUTO_INCREMENT untuk tabel `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_permissions`
@@ -443,7 +440,7 @@ ALTER TABLE `auth_tokens`
 -- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
