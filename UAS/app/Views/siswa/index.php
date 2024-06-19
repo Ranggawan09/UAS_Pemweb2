@@ -43,7 +43,7 @@
                             <td><?= $row['nisn']; ?></td>
                             <td><?= $row['nama']; ?></td>
                             <td>
-                                <button type="button" data-toggle="modal" data-target="#modalDetail" id="btn-edit" class="btn btn-sm btn-success" data-id="<?= $row['id']; ?>" data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data_nama="<?= $row['nama_ibu']; ?>" data_pekerjaan="<?= $row['pekerjaan_ayah']; ?>" data_pekerjaan="<?= $row['pekerjaan_ibu']; ?>" data_penghasilan="<?= $row['penghasilan_ayah']; ?>" data_pekerjaan="<?= $row['pekerjaan_ibu']; ?>" telepon="<?= $row['telepon']; ?>"> <i class="fa fa-info"></i> </button>
+                                <button type="button" data-toggle="modal" data-target="#modalDetail" id="btn-detail" class="btn btn-sm btn-success" data-id="<?= $row['id']; ?>" data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data-nama_ayah="<?= $row['nama_ayah']; ?>"> <i class="fa fa-info"></i> </button>
                                 <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data-nama_ayah="<?= $row['nama_ayah']; ?>"> <i class="fa fa-edit"></i> </button>
                                 <a href="/siswa/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
                             </td>
@@ -202,15 +202,15 @@
                     <input type="hidden" name="id" id="id-siswa">
                     <div class="form-group mb-0">
                         <label for="nisn">NISN:</label>
-                        <p id="nisn"><?= $row['nisn']; ?></p>
+                        <p id="nisn"></p>
                     </div>
                     <div class="form-group mb-0">
                         <label for="nama">Nama:</label>
-                        <p id="nama"><?= $row['nama']; ?></p>
+                        <p id="nama"></p>
                     </div>
                     <div class="form-group mb-0">
                         <label for="nama_ayah">Nama Ayah:</label>
-                        <p id="nama_ayah"><?= $row['nama_ayah']; ?></p>
+                        <p id="nama_ayah"></p>
                     </div>
                     <div class="form-group mb-0">
                         <label for="nama_ibu">Nama Ibu:</label>

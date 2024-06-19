@@ -194,7 +194,6 @@ return array(
     'CodeIgniter\\Exceptions\\EmergencyError' => $vendorDir . '/codeigniter4/framework/system/Exceptions/EmergencyError.php',
     'CodeIgniter\\Exceptions\\ExceptionInterface' => $vendorDir . '/codeigniter4/framework/system/Exceptions/ExceptionInterface.php',
     'CodeIgniter\\Exceptions\\FrameworkException' => $vendorDir . '/codeigniter4/framework/system/Exceptions/FrameworkException.php',
-    'CodeIgniter\\Exceptions\\HTTPExceptionInterface' => $vendorDir . '/codeigniter4/framework/system/Exceptions/HTTPExceptionInterface.php',
     'CodeIgniter\\Exceptions\\HasExitCodeInterface' => $vendorDir . '/codeigniter4/framework/system/Exceptions/HasExitCodeInterface.php',
     'CodeIgniter\\Exceptions\\ModelException' => $vendorDir . '/codeigniter4/framework/system/Exceptions/ModelException.php',
     'CodeIgniter\\Exceptions\\PageNotFoundException' => $vendorDir . '/codeigniter4/framework/system/Exceptions/PageNotFoundException.php',

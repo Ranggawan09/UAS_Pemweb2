@@ -280,7 +280,6 @@ class ComposerStaticInitd648ee3b65e8d352e12e15817702e7cd
         'CodeIgniter\\Exceptions\\EmergencyError' => __DIR__ . '/..' . '/codeigniter4/framework/system/Exceptions/EmergencyError.php',
         'CodeIgniter\\Exceptions\\ExceptionInterface' => __DIR__ . '/..' . '/codeigniter4/framework/system/Exceptions/ExceptionInterface.php',
         'CodeIgniter\\Exceptions\\FrameworkException' => __DIR__ . '/..' . '/codeigniter4/framework/system/Exceptions/FrameworkException.php',
-        'CodeIgniter\\Exceptions\\HTTPExceptionInterface' => __DIR__ . '/..' . '/codeigniter4/framework/system/Exceptions/HTTPExceptionInterface.php',
         'CodeIgniter\\Exceptions\\HasExitCodeInterface' => __DIR__ . '/..' . '/codeigniter4/framework/system/Exceptions/HasExitCodeInterface.php',
         'CodeIgniter\\Exceptions\\ModelException' => __DIR__ . '/..' . '/codeigniter4/framework/system/Exceptions/ModelException.php',
         'CodeIgniter\\Exceptions\\PageNotFoundException' => __DIR__ . '/..' . '/codeigniter4/framework/system/Exceptions/PageNotFoundException.php',

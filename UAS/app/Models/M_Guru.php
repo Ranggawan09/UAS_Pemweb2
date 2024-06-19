@@ -32,13 +32,18 @@ class M_Guru extends Model
         return $this->builder->insert($data);
     }
 
-    public function hapus($id)
-    {
-        return $this->builder->delete(['id' => $id]);
-    }
-
     public function ubah($data, $id)
     {
         return $this->builder->update($data, ['id' => $id]);
     }
+
+    public function getGambarById($id)
+{
+    return $this->builder->select('gambar')->where('id', $id)->get()->getRowArray()['gambar'];
+}
+public function getNipById($id)
+{
+    return $this->builder->select('nip')->where('id', $id)->get()->getRowArray()['nip'];
+}
+
 }
