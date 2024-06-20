@@ -20,6 +20,13 @@ class Siswa extends BaseController
 
     public function index()
     {
+        $katakunci = $this->request->getVar('keyword');
+        if ($katakunci) {
+            $guru = $this->siswa_m->search($katakunci);
+        } else {
+            $guru = $this->siswa_m;
+        }
+
         $data = [
             'judul' => 'Data Siswa',
             'siswa' => $this->siswa_m->getAllData()

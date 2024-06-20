@@ -12,20 +12,20 @@ class M_Guru extends Model
     protected $useTimestamps = true;
     protected $allowedFields = ['gambar', 'nama', 'nip'];
 
-    //public function __construct()
-    //{
-    //    $this->db = db_connect();
-    //    $this->builder = $this->db->table($this->table);
-    //}
-
     public function getAllData($id = false)
     {
         if ($id == false) {
             return $this->db->table('guru')->get()->getResultArray();
         } else {
-            $this->builder->where('id', $id);
+            $this->table('guru')->where('id', $id);
             return $this->db->table('guru')->get()->getRowArray();
         }
+    }
+
+    public function search($katakunci)
+    {
+        return $this->table('guru')->like('nama', $katakunci)
+        ->orLike('nip', $katakunci);
     }
 
     public function tambah($data)
@@ -44,7 +44,7 @@ class M_Guru extends Model
 }
 public function getNipById($id)
 {
-    return $this->buildb->table('guru')->select('nip')->where('id', $id)->get()->getRowArray()['nip'];
+    return $this->db->table('guru')->select('nip')->where('id', $id)->get()->getRowArray()['nip'];
 }
 
 }

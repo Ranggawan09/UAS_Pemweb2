@@ -11,7 +11,8 @@ $routes->get('/siswa/(:num)', 'Siswa::edit/$1');
 $routes->get('/siswa/save', 'Siswa::save');
 $routes->delete('siswa/(:num)', 'Siswa::hapus/$1');
 
-$routes->get('/guru/create', 'Guru::create');
+
+$routes->get('/guru/index', 'Guru::index');
 $routes->get('/guru/(:num)', 'Guru::edit/$1');
 $routes->get('/guru/save', 'Guru::save');
 $routes->delete('guru/(:num)', 'Guru::hapus/$1');

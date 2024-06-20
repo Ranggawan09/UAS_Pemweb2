@@ -13,17 +13,27 @@ class Guru extends BaseController
     {
         $this->guru_m = new M_Guru();
         helper('sn');
-        $this->pager = \Config\Services::pager();
+        //$this->pager = \Config\Services::pager();
     }
 
     public function index()
     {
+        $pageSekarang = $this->request->getVar('page_guru')
+            ? $this->request->getVar('page_guru') : 1;
+
+        $katakunci = $this->request->getVar('keyword');
+        if ($katakunci) {
+            $guru = $this->guru_m->search($katakunci);
+        } else {
+            $guru = $this->guru_m;
+        }
 
         $data = [
             'judul' => 'Data Guru',
             //'guru' => $this->guru_m->getAllData()
-            'guru' => $this->guru_m->paginate('10', 'guru'),
-            'pager' => $this->guru_m->pager
+            'guru' => $guru->paginate('10', 'guru'),
+            'pager' => $this->guru_m->pager,
+            'pageSekarang' => $pageSekarang
         ];
         // load view
         tampilan('guru/index', $data);

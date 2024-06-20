@@ -7,6 +7,25 @@
     <!-- Sweet Alert 2 -->
     <div class="swal" data-swal="<?= session()->getFlashdata('message'); ?>"></div>
 
+    <!-- Print -->
+    <style>
+        @media print {
+            @page {
+                margin-top: 30px;
+                margin-bottom: 10px;
+            }
+
+            .navbar-nav,
+            .card-header, 
+            .btn, 
+            th:nth-child(4),
+            td:nth-child(4),
+            footer, 
+            a#debug-icon-link {
+                display: none;
+            }
+        }
+     </style>
 
     <div class="row">
         <div class="col-md-6">
@@ -19,13 +38,35 @@
     </div>
 
     <div class="card">
-        <div class="card-header">
-            <!-- Button trigger tambah -->
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTambah">
-                <i class="fa fa-plus"></i>
-                Tambah Data
-            </button>
+    <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Button trigger tambah -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
+            <i class="fa fa-plus"></i>
+            Tambah Data
+        </button>
+
+        <!-- Button trigger print -->
+        <button onclick="window.print()" class="btn btn-outline-secondary shadow mx-2">
+            <i class="fa fa-print"></i>
+            Print
+        </button>
+
+    <!-- Search bar -->
+    <form action="" method="post" class="ml-auto">
+        <div class="input-group">
+            <input type="text" class="form-control rounded mr-2" placeholder="Masukkan Nama / NISN" aria-label="Cari" name="keyword">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary rounded" type="submit" name="submit">
+                    <i class="fas fa-search"></i> Cari
+                </button>
+            </div>
         </div>
+    </form>
+    </div>
+</div>
+
+
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
@@ -33,6 +74,7 @@
                         <th>No</th>
                         <th>NISN</th>
                         <th>NAMA</th>
+                        <th>Opsi</th>
                     </tr>
                 </thead>
                 <tbody>

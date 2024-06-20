@@ -26,6 +26,11 @@ class M_Siswa extends Model {
         }
         
     }
+    public function search($katakunci)
+    {
+        return $this->table('siswa')->like('nama', $katakunci)
+        ->orLike('nisn', $katakunci);
+    }
 
     public function tambah ($data)
     {
