@@ -35,5 +35,15 @@ class M_Siswa extends Model {
     {
        return $this->db->table('siswa')->update($data, ['id' => $id]);
     }
+
+    public function getJumlahSiswaByKelas($kelas)
+    {
+        return $this->like('kelas', $kelas, 'after')->countAllResults();
+    }
+
+    public function getJumlahSiswaBySubKelas($kelas, $subkelas)
+    {
+        return $this->where('kelas', "{$kelas}{$subkelas}")->countAllResults();
+    }
 }
 

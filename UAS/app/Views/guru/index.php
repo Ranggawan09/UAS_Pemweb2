@@ -43,7 +43,7 @@
     <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
         <!-- Button trigger tambah -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
+        <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
             <i class="fa fa-plus"></i>
             Tambah Data
         </button>
@@ -59,7 +59,7 @@
         <div class="input-group">
             <input type="text" class="form-control rounded mr-2" placeholder="Masukkan Nama / NISN" aria-label="Cari" name="keyword">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary rounded" type="submit" name="submit">
+                <button class="btn btn-primary rounded" type="submit" name="submit">
                     <i class="fas fa-search"></i> Cari
                 </button>
             </div>

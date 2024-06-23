@@ -19,8 +19,8 @@
             .card-header, 
             .btn,
             .pagination, 
-            th:nth-child(4),
-            td:nth-child(4),
+            th:nth-child(5),
+            td:nth-child(5),
             footer, 
             a#debug-icon-link {
                 display: none;
@@ -42,7 +42,7 @@
     <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
         <!-- Button trigger tambah -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
+        <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
             <i class="fa fa-plus"></i>
             Tambah Data
         </button>
@@ -58,7 +58,7 @@
         <div class="input-group">
             <input type="text" class="form-control rounded mr-2" placeholder="Masukkan Nama / NISN / Kelas" aria-label="Cari" name="keyword">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary rounded" type="submit" name="submit">
+                <button class="btn btn-primary rounded" type="submit" name="submit">
                     <i class="fas fa-search"></i> Cari
                 </button>
             </div>
@@ -103,15 +103,13 @@
         </table>
         <?php else: ?>
 <div class="alert alert-warning">Data tidak ditemukan.</div>
-
 <?php endif; ?>
         </div>
-        <br>
+</div>
+<br>
         <div class="d-flex justify-content-center">
     <?= $pager->links('siswa', 'template_pager'); ?>
     </div>
-
-</div>
 <!-- /.container-fluid -->
 
 </div>

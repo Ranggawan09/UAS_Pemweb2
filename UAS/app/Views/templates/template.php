@@ -59,7 +59,7 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Member
+            Menu
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
