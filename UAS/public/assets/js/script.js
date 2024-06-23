@@ -3,14 +3,28 @@ $(document).on("click", "#btn-edit", function () {
   $(".modal-body #id-siswa").val($(this).data("id"));
   $(".modal-body #nisn").val($(this).data("nisn"));
   $(".modal-body #nama").val($(this).data("nama"));
-  $(".modal-body #nama_ayah").val($(this).data("nama_ayah"));
+  $(".modal-body #kelas").val($(this).data("kelas"));
+  $(".modal-body #alamat").val($(this).data("alamat"));
+  $(".modal-body #telepon").val($(this).data("telepon"));
 });
 
 $(document).on("click", "#btn-detail", function () {
   $(".modal-body #id-siswa").val($(this).data("id"));
   $(".modal-body #nisn").text($(this).data("nisn"));
   $(".modal-body #nama").text($(this).data("nama"));
-  $(".modal-body #nama_ayah").text($(this).data("nama_ayah"));
+  $(".modal-body #kelas").text($(this).data("kelas"));
+  $(".modal-body #alamat").text($(this).data("alamat"));
+  $(".modal-body #telepon").text($(this).data("telepon"));
+});
+
+//jadwal
+$(document).on("click", "#btn-edit", function () {
+  $(".modal-body #id-jadwal").val($(this).data("id"));
+  $(".modal-body #hari").val($(this).data("hari"));
+  $(".modal-body #mapel").val($(this).data("mapel"));
+  $(".modal-body #nama_guru").val($(this).data("guru"));
+  $(".modal-body #kelas").val($(this).data("kelas"));
+  $(".modal-body #jam").val($(this).data("jam"));
 });
 
 //guru

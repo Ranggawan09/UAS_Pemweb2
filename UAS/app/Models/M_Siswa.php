@@ -1,44 +1,39 @@
 <?php
 namespace App\Models;
 
+use App\Controllers\Siswa;
 use CodeIgniter\Model;
 
 class M_Siswa extends Model {
     protected $table = 'siswa';
     protected $primaryKey = 'id';
     protected $useTimestamps = true;
-    protected $allowedFields = ['nisn', 'nama', 'nama_ayah', 'nama_ibu', 'pekerjaan_ayah', 'pekerjaan_ibu', 
-    'penghasilan_ayah', 'pengasilan_ibu', 'telepon'];
+    protected $allowedFields = ['nisn', 'nama', 'kelas', 'alamat', 'telepon'];
 
-    public function __construct()
-    {
-        $this->db = db_connect();
-        $this->builder = $this->db->table($this->table);
-    }
 
-    public function getAllData($id = null)
+    public function getAllData($id = false)
     {
-        if ($id == null){
-        return $this->builder->get()->getResultArray();
+        if ($id == false){
+        return $this->db->table('siswa')->get()->getResultArray();
         } else {
-            $this->builder->where('id', $id);
-            return $this->builder->get()->getRowArray();
+            $this->db->table('siswa')->where('id', $id);
+            return $this->db->table('siswa')->get()->getRowArray();
         }
         
     }
     public function search($katakunci)
     {
         return $this->table('siswa')->like('nama', $katakunci)
-        ->orLike('nisn', $katakunci);
+        ->orLike('nisn', $katakunci)->orLike('kelas', $katakunci);
     }
 
     public function tambah ($data)
     {
-       return $this->builder->insert($data);
+       return $this->db->table('siswa')->insert($data);
     }
     public function ubah ($data, $id)
     {
-       return $this->builder->update($data, ['id' => $id]);
+       return $this->db->table('siswa')->update($data, ['id' => $id]);
     }
 }
 

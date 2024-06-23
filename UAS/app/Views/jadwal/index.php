@@ -56,7 +56,7 @@
     <!-- Search bar -->
     <form action="" method="post" class="ml-auto">
         <div class="input-group">
-            <input type="text" class="form-control rounded mr-2" placeholder="Masukkan Nama / NISN / Kelas" aria-label="Cari" name="keyword">
+            <input type="text" class="form-control rounded mr-2" placeholder="Masukkan mapel / hari / Kelas" aria-label="Cari" name="keyword">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary rounded" type="submit" name="submit">
                     <i class="fas fa-search"></i> Cari
@@ -67,35 +67,35 @@
     </div>
 </div>
 
-<?php if (!empty($siswa)): ?>
+<?php if (!empty($jadwal)): ?>
     <div class="card-body">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>NISN</th>
-                    <th>NAMA</th>
+                    <th>HARI</th>
+                    <th>MAPEL</th>
+                    <th>Guru Pengajar</th>
                     <th>KELAS</th>
+                    <th>JAM</th>
                     <th>Opsi</th>
                 </tr>
             </thead>
             <tbody>
             <?php $i = 1 + (10 * ($pageSekarang - 1)); ?>
-                <?php foreach ($siswa as $row) : ?>
+                <?php foreach ($jadwal as $row) : ?>
                     <tr>
                         <td scope="row"><?= $i++; ?></td>
-                        <td><?= $row['nisn']; ?></td>
-                        <td><?= $row['nama']; ?></td>
+                        <td><?= $row['hari']; ?></td>
+                        <td><?= $row['mapel']; ?></td>
+                        <td><?= isset($row['nama_guru']) ? $row['nama_guru'] : 'Tidak ada'; ?></td>
                         <td><?= $row['kelas']; ?></td>
+                        <td><?= $row['jam']; ?></td>
                         <td>
-                            <button type="button" data-toggle="modal" data-target="#modalDetail" id="btn-detail" class="btn btn-sm btn-success" 
-                            data-id="<?= $row['id']; ?>" data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data-kelas="<?= $row['kelas']; ?>"
-                            data-alamat="<?= $row['alamat']; ?>" data-telepon="<?= $row['telepon']; ?>"> <i class="fa fa-info"></i> </button>
-
                             <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" 
-                            data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data-kelas="<?= $row['kelas']; ?>"
-                            data-alamat="<?= $row['alamat']; ?>" data-telepon="<?= $row['telepon']; ?>"> <i class="fa fa-edit"></i> </button>
-                            <a href="/siswa/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
+                            data-hari="<?= $row['hari']; ?>" data-mapel="<?= $row['mapel']; ?>" data-guru="<?= $row['nama_guru']; ?>" data-kelas="<?= $row['kelas']; ?>"
+                            data-jam="<?= $row['jam']; ?>"> <i class="fa fa-edit"></i> </button>
+                            <a href="/jadwal/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -108,7 +108,7 @@
         </div>
         <br>
         <div class="d-flex justify-content-center">
-    <?= $pager->links('siswa', 'template_pager'); ?>
+    <?= $pager->links('jadwal', 'template_pager'); ?>
     </div>
 
 </div>
@@ -131,31 +131,30 @@
             <div class="modal-body">
                 <div class="container-fluid">
                 
-                    <form action="<?= base_url("siswa/tambah"); ?>" method="post">
+                    <form action="<?= base_url("jadwal/tambah"); ?>" method="post">
                     <?php if (session()->getFlashdata('err')): ?>
                     <div class="alert alert-danger">
                         <?= session()->getFlashdata('err') ?>
                     </div>
                 <?php endif; ?>
-                <input type="hidden" name="page_siswa" value="<?= $pageSekarang ?>">
+                <input type="hidden" name="page_jadwal" value="<?= $pageSekarang ?>">
                         <div class="form-group mb-0">
-                            <input type="text" name="nisn" id="nisn" class="form-control" placeholder="Masukkan NISN">
+                            <input type="text" name="hari" id="hari" class="form-control" placeholder="Masukkan Hari">
                         </div>
                         <br>
                         <div class="form-group mb-0">
-                            <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama">
+                            <input type="text" name="mapel" id="mapel" class="form-control" placeholder="Masukkan Mata Pelajaran">
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="text" name="nama_guru" id="nama_guru" class="form-control" placeholder="Masukkan Guru Pengajar">
                         </div>
                         <div class="form-group mb-0">
                             <label for="kelas"></label>
                             <input type="text" name="kelas" id="kelas" class="form-control" placeholder="Masukkan Kelas">
                         </div>
                         <div class="form-group mb-0">
-                            <label for="alamat"></label>
-                            <input type="text" name="alamat" id="alamat" class="form-control" placeholder="Masukkan Alamat">
-                        </div>
-                        <div class="form-group mb-0">
-                            <label for="telepon"></label>
-                            <input type="text" name="telepon" id="telepon" class="form-control" placeholder="Masukkan Nomor Telepon">
+                            <label for="jam"></label>
+                            <input type="text" name="jam" id="jam" class="form-control" placeholder="Masukkan jam Pelajaran">
                         </div>
                 </div>
             </div>
@@ -181,27 +180,27 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <form action="<?= base_url("siswa/ubah"); ?>" method="post">
-                        <input type="hidden" name="id" id="id-siswa">
+                    <form action="<?= base_url("jadwal/ubah"); ?>" method="post">
+                        <input type="hidden" name="id" id="id-jadwal">
                         <div class="form-group mb-0">
-                            <label for="nisn"></label>
-                            <input type="text" name="nisn" id="nisn" class="form-control" placeholder="Masukkan NISN" value="<?= old('nisn') ?>">
+                            <label for="hari"></label>
+                            <input type="text" name="hari" id="hari" class="form-control" placeholder="Masukkan hari" value="<?= old('hari') ?>">
                         </div>
                         <div class="form-group mb-0">
-                            <label for="nama"></label>
-                            <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama" value="<?= old('nama') ?>">
+                            <label for="mapel"></label>
+                            <input type="text" name="mapel" id="mapel" class="form-control" placeholder="Masukkan mapel" value="<?= old('mapel') ?>">
+                        </div>
+                        <div class="form-group mb-0">
+                            <label for="nama_guru"></label>
+                            <input type="text" name="nama_guru" id="nama_guru" class="form-control" placeholder="Masukkan Guru Pengajar" value="<?= old('nama_guru') ?>">
                         </div>
                         <div class="form-group mb-0">
                             <label for="kelas"></label>
                             <input type="text" name="kelas" id="kelas" class="form-control" placeholder="Masukkan kelas" value="<?= old('kelas') ?>">
                         </div>
                         <div class="form-group mb-0">
-                            <label for="alamat"></label>
-                            <input type="text" name="alamat" id="alamat" class="form-control" placeholder="Masukkan Alamat" value="<?= old('alamat') ?>">
-                        </div>
-                        <div class="form-group mb-0">
-                            <label for="telepon"></label>
-                            <input type="text" name="telepon" id="telepon" class="form-control" placeholder="Masukkan Nomor Telepon" value="<?= old('telepon') ?>">
+                            <label for="jam"></label>
+                            <input type="text" name="jam" id="jam" class="form-control" placeholder="Masukkan jam" value="<?= old('jam') ?>">
                         </div>
                 </div>
             </div>
@@ -210,48 +209,6 @@
                 <button type="submit" name="ubah" class="btn btn-primary">Ubah Data</button>
             </div>
             </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Detail Data -->
-<div class="modal fade" id="modalDetail">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Detail <?= $judul; ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <input type="hidden" name="id" id="id-siswa">
-                    <div class="form-group mb-0">
-                        <label for="nisn">NISN:</label>
-                        <p id="nisn"></p>
-                    </div>
-                    <div class="form-group mb-0">
-                        <label for="nama">Nama:</label>
-                        <p id="nama"></p>
-                    </div>
-                    <div class="form-group mb-0">
-                        <label for="kelas">Kelas:</label>
-                        <p id="kelas"></p>
-                    </div>
-                    <div class="form-group mb-0">
-                        <label for="telepon">Telepon:</label>
-                        <p id="telepon"></p>
-                    </div>
-                    <div class="form-group mb-0">
-                        <label for="alamat">Alamat:</label>
-                        <p id="alamat"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
         </div>
     </div>
 </div>

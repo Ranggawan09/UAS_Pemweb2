@@ -19,21 +19,31 @@ class Siswa extends BaseController
     }
 
     public function index()
-    {
-        $katakunci = $this->request->getVar('keyword');
-        if ($katakunci) {
-            $guru = $this->siswa_m->search($katakunci);
-        } else {
-            $guru = $this->siswa_m;
-        }
+{
+    $pager = \Config\Services::pager();
+    // Mendapatkan halaman saat ini
+    $page = $this->request->getVar('page_siswa') ? 
+    $this->request->getVar('page_siswa') : 1;
 
-        $data = [
-            'judul' => 'Data Siswa',
-            'siswa' => $this->siswa_m->getAllData()
-        ];
-        // Load view
-        tampilan('siswa/index', $data);
+    // Mendapatkan kata kunci pencarian
+    $katakunci = $this->request->getVar('keyword');
+    if ($katakunci) {
+        $siswa = $this->siswa_m->search($katakunci);
+    } else {
+        $siswa = $this->siswa_m;
     }
+
+    // Mengatur data untuk view
+    $data = [
+        'judul' => 'Data Siswa',
+        'siswa' => $siswa->paginate(10, 'siswa'),
+        'pager' => $siswa->pager,
+        'pageSekarang' => $page
+    ];
+
+    // Memuat view
+    tampilan('siswa/index', $data);
+}
 
     public function hapus($id)
     {
@@ -59,10 +69,13 @@ class Siswa extends BaseController
 
             if (!$val) {
                 session()->setFlashdata('err', \Config\Services::validation()->listErrors());
-
+                $page = $this->request->getVar('page_siswa') ? $this->request->getVar('page_siswa') : 1;
+                
                 $data = [
                     'judul' => 'Data Siswa',
-                    'siswa' => $this->siswa_m->getAllData()
+                    'siswa' => $this->siswa_m->paginate(10, 'siswa'),
+                    'pager' => $this->siswa_m->pager,
+                    'pageSekarang' => $page
                 ];
                 //load view
                 tampilan('siswa/index', $data);
@@ -70,12 +83,8 @@ class Siswa extends BaseController
                 $data = [
                     'nisn' => $this->request->getPost('nisn'),
                     'nama' => $this->request->getPost('nama'),
-                    'nama_ayah' => $this->request->getPost('nama_ayah'),
-                    'nama_ibu' => $this->request->getPost('nama_ibu'),
-                    'pekerjaan_ayah' => $this->request->getPost('pekerjaan_ayah'),
-                    'pekerjaan_ibu' => $this->request->getPost('pekerjaan_ibu'),
-                    'penghasilan_ayah' => $this->request->getPost('penghasilan_ayah'),
-                    'penghasilan_ibu' => $this->request->getPost('penghasilan_ibu'),
+                    'kelas' => $this->request->getPost('kelas'),
+                    'alamat' => $this->request->getPost('alamat'),
                     'telepon' => $this->request->getPost('telepon')
                 ];
 
@@ -83,11 +92,14 @@ class Siswa extends BaseController
                 $success = $this->siswa_m->tambah($data);
                 if ($success) {
                     session()->setFlashdata('message', 'Ditambahkan');
-                    return redirect()->to(base_url('siswa'));
+                    // Dapatkan halaman saat ini dari URL atau setel ke 1 jika tidak ada
+                $page = $this->request->getVar('page_siswa') ? $this->request->getVar('page_siswa') : 1;
+                return redirect()->to(base_url('siswa?page_siswa=' . $page));
                 }
             }
         } else {
-            return redirect()->to(base_url('siswa'));
+            $page = $this->request->getVar('page_siswa') ? $this->request->getVar('page_siswa') : 1;
+            return redirect()->to(base_url('siswa?page_siswa=' . $page));
         }
     }
 
@@ -125,10 +137,14 @@ class Siswa extends BaseController
             if (!$val) {
                 session()->setFlashdata('err', \Config\Services::validation()->listErrors());
 
-                $data = [
-                    'judul' => 'Data Siswa',
-                    'siswa' => $this->siswa_m->getAllData()
-                ];
+                $page = $this->request->getVar('page_siswa') ? $this->request->getVar('page_siswa') : 1;
+            
+            $data = [
+                'judul' => 'Data Siswa',
+                'siswa' => $this->siswa_m->paginate(10, 'siswa'),
+                'pager' => $this->siswa_m->pager,
+                'pageSekarang' => $page
+            ];
                 //load view
                 tampilan('siswa/index', $data);
             } else {
@@ -137,7 +153,9 @@ class Siswa extends BaseController
                 $data = [
                     'nisn' => $this->request->getPost('nisn'),
                     'nama' => $this->request->getPost('nama'),
-                    'nama_ayah' => $this->request->getPost('nama_ayah'),
+                    'kelas' => $this->request->getPost('kelas'),
+                    'alamat' => $this->request->getPost('alamat'),
+                    'telepon' => $this->request->getPost('telepon')
                 ];
 
                 //update data

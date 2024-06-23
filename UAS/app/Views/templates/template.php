@@ -78,6 +78,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="<?=base_url('jadwal');?>">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Jadwal Siswa</span>
+            </a>
+        </li>
+
 
 
         <!-- Divider -->

@@ -7,8 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index', ['filter' => 'login']);
 $routes->get('/siswa/tambah', 'Siswa::tambah');
-$routes->get('/siswa/(:num)', 'Siswa::edit/$1');
-$routes->get('/siswa/save', 'Siswa::save');
+$routes->get('/siswa/(:num)', 'Siswa::ubah/$1');
 $routes->delete('siswa/(:num)', 'Siswa::hapus/$1');
 
 

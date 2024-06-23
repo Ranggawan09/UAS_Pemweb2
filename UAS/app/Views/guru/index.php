@@ -18,6 +18,7 @@
             .navbar-nav,
             .card-header, 
             .btn, 
+            .pagination,
             th:nth-child(5),
             td:nth-child(5),
             footer, 
@@ -67,7 +68,7 @@
     </div>
 </div>
 
-
+<?php if (!empty($guru)): ?>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -79,25 +80,29 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $i = 1 + (10 * ($pageSekarang - 1)) ?>
-                <?php foreach ($guru as $row) : ?>
-                    <tr>
-                        <td scope="row"><?= $i++; ?></td>
-                        <td><img width="50" src="<?= '/assets/img/guru/' . $row['gambar']; ?>" class="rounded"></td>
-                        <td><?= $row['nip']; ?></td>
-                        <td><?= $row['nama']; ?></td>
-                        <td>
-                            <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" data-gambar="<?= $row['gambar']; ?>" data-nip="<?= $row['nip']; ?>" data-nama="<?= $row['nama']; ?>"> <i class="fa fa-edit"></i> </button>
-                            <a href="/guru/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
+    <?php $i = 1 + (10 * ($pageSekarang - 1)); ?>
+    <?php foreach ($guru as $row) : ?>
+        <tr>
+            <td scope="row"><?= $i++; ?></td>
+            <td><img width="50" src="<?= '/assets/img/guru/' . $row['gambar']; ?>" class="rounded"></td>
+            <td><?= $row['nip']; ?></td>
+            <td><?= $row['nama']; ?></td>
+            <td>
+                <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" data-gambar="<?= $row['gambar']; ?>" data-nip="<?= $row['nip']; ?>" data-nama="<?= $row['nama']; ?>"> <i class="fa fa-edit"></i> </button>
+                <a href="/guru/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
+
         </table>
+        <?php else: ?>
+    <div class="alert alert-warning">Data tidak ditemukan.</div>
+<?php endif; ?>
     </div>
     <br>
     <div class="d-flex justify-content-center">
-    <?= $pager->links('guru', 'guru_pager'); ?>
+    <?= $pager->links('guru', 'template_pager'); ?>
 </div>
 </div>
 <!-- /.container-fluid -->
@@ -116,15 +121,21 @@
                 </button>
             </div>
             <div class="modal-body">
+                <?php if (session()->getFlashdata('err')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('err') ?>
+                    </div>
+                <?php endif; ?>
                 <form action="<?= base_url('guru/tambah'); ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="page_guru" value="<?= $pageSekarang ?>">
                     <div class="form-group mb-2">
                         <input type="file" name="gambar" class="dropify" data-height="100">
                     </div>
                     <div class="form-group mb-2">
-                        <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan nip">
+                        <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan nip" value="<?= old('nip') ?>">
                     </div>
                     <div class="form-group mb-2">
-                        <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama guru">
+                        <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama guru" value="<?= old('nama') ?>">
                     </div>
             </div>
             <div class="modal-footer">
@@ -135,6 +146,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Modal Box Ubah Data Guru -->
 <div class="modal fade" id="modalUbah">
@@ -150,13 +162,13 @@
                 <form action="<?= base_url('guru/ubah'); ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" id="id-guru">
                 <div class="form-group mb-2">
-                    <input type="file" name="gambar" id="gambar" class="dropify" data-height="100" data-default-file="<?= '/assets/img/guru/' . $row['gambar']; ?>">
+                    <input type="file" name="gambar" id="gambar" class="dropify" data-height="100" data-default-file="<?= '/assets/img/guru/default.png'?>">
                 </div>
                     <div class="form-group mb-2">
-                        <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan nip">
+                        <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan nip" value="<?= old('nip') ?>">
                     </div>
                     <div class="form-group mb-2">
-                        <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama guru">
+                        <input type="text" name="nama" id="nama" class="form-control" placeholder="Masukkan Nama guru" value="<?= old('nama') ?>">
                     </div>
             </div>
             <div class="modal-footer">
