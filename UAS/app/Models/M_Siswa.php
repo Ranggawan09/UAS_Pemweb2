@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Models;
 
-use App\Controllers\Siswa;
 use CodeIgniter\Model;
 
-class M_Siswa extends Model {
+class M_Siswa extends Model
+{
     protected $table = 'siswa';
     protected $primaryKey = 'id';
     protected $useTimestamps = true;
@@ -13,27 +14,26 @@ class M_Siswa extends Model {
 
     public function getAllData($id = false)
     {
-        if ($id == false){
-        return $this->db->table('siswa')->get()->getResultArray();
+        if ($id == false) {
+            return $this->db->table('siswa')->get()->getResultArray();
         } else {
             $this->db->table('siswa')->where('id', $id);
             return $this->db->table('siswa')->get()->getRowArray();
         }
-        
     }
     public function search($katakunci)
     {
         return $this->table('siswa')->like('nama', $katakunci)
-        ->orLike('nisn', $katakunci)->orLike('kelas', $katakunci);
+            ->orLike('nisn', $katakunci)->orLike('kelas', $katakunci);
     }
 
-    public function tambah ($data)
+    public function tambah($data)
     {
-       return $this->db->table('siswa')->insert($data);
+        return $this->db->table('siswa')->insert($data);
     }
-    public function ubah ($data, $id)
+    public function ubah($data, $id)
     {
-       return $this->db->table('siswa')->update($data, ['id' => $id]);
+        return $this->db->table('siswa')->update($data, ['id' => $id]);
     }
 
     public function getJumlahSiswaByKelas($kelas)
@@ -46,4 +46,3 @@ class M_Siswa extends Model {
         return $this->where('kelas', "{$kelas}{$subkelas}")->countAllResults();
     }
 }
-

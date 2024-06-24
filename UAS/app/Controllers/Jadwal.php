@@ -2,14 +2,10 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
 use App\Models\M_Jadwal;
-use Predis\Command\Redis\FUNCTIONS;
-
 
 class jadwal extends BaseController
 {
-
     protected $jadwal_m;
     protected $id;
     public function __construct()
@@ -19,32 +15,32 @@ class jadwal extends BaseController
     }
 
     public function index()
-{
-    // Mendapatkan halaman saat ini
-    $page = $this->request->getVar('page_jadwal') ? 
-    $this->request->getVar('page_jadwal') : 1;
+    {
+        // Mendapatkan halaman saat ini
+        $page = $this->request->getVar('page_jadwal') ?
+            $this->request->getVar('page_jadwal') : 1;
 
-    // Mendapatkan kata kunci pencarian
-    $katakunci = $this->request->getVar('keyword');
-    if ($katakunci) {
-        $jadwal = $this->jadwal_m->search($katakunci);
-    } else {
-        $jadwal = $this->jadwal_m;
+        // Mendapatkan kata kunci pencarian
+        $katakunci = $this->request->getVar('keyword');
+        if ($katakunci) {
+            $jadwal = $this->jadwal_m->search($katakunci);
+        } else {
+            $jadwal = $this->jadwal_m;
+        }
+
+        // Mengatur data untuk view
+        $data = [
+            'judul' => 'Data jadwal',
+            'jadwal' => $this->jadwal_m->select('jadwal.*, guru.nama as nama_guru')
+                ->join('guru', 'guru.id = jadwal.guru_id')
+                ->paginate(10, 'jadwal'),
+            'pager' => $jadwal->pager,
+            'pageSekarang' => $page
+        ];
+
+        // Memuat view
+        tampilan('jadwal/index', $data);
     }
-
-    // Mengatur data untuk view
-    $data = [
-        'judul' => 'Data jadwal',
-        'jadwal' => $this->jadwal_m->select('jadwal.*, guru.nama as nama_guru')
-                                       ->join('guru', 'guru.id = jadwal.guru_id')
-                                       ->paginate(10, 'jadwal'),
-        'pager' => $jadwal->pager,
-        'pageSekarang' => $page
-    ];
-
-    // Memuat view
-    tampilan('jadwal/index', $data);
-}
 
     public function hapus($id)
     {
@@ -75,10 +71,12 @@ class jadwal extends BaseController
             if (!$val) {
                 session()->setFlashdata('err', \Config\Services::validation()->listErrors());
                 $page = $this->request->getVar('page_jadwal') ? $this->request->getVar('page_jadwal') : 1;
-                
+
                 $data = [
                     'judul' => 'Data jadwal',
-                    'jadwal' => $this->jadwal_m->paginate(10, 'jadwal'),
+                    'jadwal' => $this->jadwal_m->select('jadwal.*, guru.nama as nama_guru')
+                        ->join('guru', 'guru.id = jadwal.guru_id')
+                        ->paginate(10, 'jadwal'),
                     'pager' => $this->jadwal_m->pager,
                     'pageSekarang' => $page
                 ];
@@ -88,6 +86,7 @@ class jadwal extends BaseController
                 $data = [
                     'hari' => $this->request->getPost('hari'),
                     'mapel' => $this->request->getPost('mapel'),
+                    'guru_id' => $this->request->getPost('guru_id'),
                     'kelas' => $this->request->getPost('kelas'),
                     'jam' => $this->request->getPost('jam')
                 ];
@@ -97,8 +96,8 @@ class jadwal extends BaseController
                 if ($success) {
                     session()->setFlashdata('message', 'Ditambahkan');
                     // Dapatkan halaman saat ini dari URL atau setel ke 1 jika tidak ada
-                $page = $this->request->getVar('page_jadwal') ? $this->request->getVar('page_jadwal') : 1;
-                return redirect()->to(base_url('jadwal?page_jadwal=' . $page));
+                    $page = $this->request->getVar('page_jadwal') ? $this->request->getVar('page_jadwal') : 1;
+                    return redirect()->to(base_url('jadwal?page_jadwal=' . $page));
                 }
             }
         } else {
@@ -110,14 +109,8 @@ class jadwal extends BaseController
     public function ubah()
     {
         if (isset($_POST['ubah'])) {
-
-            $id = $this->request->getPost('id');
-            $nisn = $this->request->getPost('nisn');
-            $db_nisn = $this->jadwal_m->getAllData($id)['nisn'];
-
-            if ($nisn === $db_nisn) {
-                $val = $this->validate([
-                    'hari' => [
+            $val = $this->validate([
+                'hari' => [
                     'rules' => 'required'
                 ],
                 'mapel' => [
@@ -129,34 +122,19 @@ class jadwal extends BaseController
                 'jam' => [
                     'rules' => 'required'
                 ]
-                ]);
-            } else {
-                $val = $this->validate([
-                    'hari' => [
-                    'rules' => 'required'
-                ],
-                'mapel' => [
-                    'rules' => 'required'
-                ],
-                'kelas' => [
-                    'rules' => 'required'
-                ],
-                'jam' => [
-                    'rules' => 'required'
-                ]
-                ]);
-            }
+            ]);
             if (!$val) {
                 session()->setFlashdata('err', \Config\Services::validation()->listErrors());
-
                 $page = $this->request->getVar('page_jadwal') ? $this->request->getVar('page_jadwal') : 1;
-            
-            $data = [
-                'judul' => 'Data jadwal',
-                'jadwal' => $this->jadwal_m->paginate(10, 'jadwal'),
-                'pager' => $this->jadwal_m->pager,
-                'pageSekarang' => $page
-            ];
+
+                $data = [
+                    'judul' => 'Data jadwal',
+                    'jadwal' => $this->jadwal_m->select('jadwal.*, guru.nama as nama_guru')
+                        ->join('guru', 'guru.id = jadwal.guru_id')
+                        ->paginate(10, 'jadwal'),
+                    'pager' => $this->jadwal_m->pager,
+                    'pageSekarang' => $page
+                ];
                 //load view
                 tampilan('jadwal/index', $data);
             } else {
@@ -165,6 +143,7 @@ class jadwal extends BaseController
                 $data = [
                     'hari' => $this->request->getPost('hari'),
                     'mapel' => $this->request->getPost('mapel'),
+                    'guru_id' => $this->request->getPost('guru_id'),
                     'kelas' => $this->request->getPost('kelas'),
                     'jam' => $this->request->getPost('jam')
                 ];
@@ -173,11 +152,14 @@ class jadwal extends BaseController
                 $success = $this->jadwal_m->ubah($data, $id);
                 if ($success) {
                     session()->setFlashdata('message', 'Diubah');
-                    return redirect()->to(base_url('jadwal'));
+                    // Dapatkan halaman saat ini dari URL atau setel ke 1 jika tidak ada
+                    $page = $this->request->getVar('page_jadwal') ? $this->request->getVar('page_jadwal') : 1;
+                    return redirect()->to(base_url('jadwal?page_jadwal=' . $page));
                 }
             }
         } else {
-            return redirect()->to(base_url('jadwal'));
+            $page = $this->request->getVar('page_jadwal') ? $this->request->getVar('page_jadwal') : 1;
+            return redirect()->to(base_url('jadwal?page_jadwal=' . $page));
         }
     }
 }

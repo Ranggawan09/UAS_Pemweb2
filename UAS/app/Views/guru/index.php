@@ -16,17 +16,17 @@
             }
 
             .navbar-nav,
-            .card-header, 
-            .btn, 
+            .card-header,
+            .btn,
             .pagination,
             th:nth-child(5),
             td:nth-child(5),
-            footer, 
+            footer,
             a#debug-icon-link {
                 display: none;
             }
         }
-     </style>
+    </style>
 
     <div class="row">
         <div class="col-md-8">
@@ -40,70 +40,70 @@
     </div>
 
     <div class="card">
-    <div class="card-header">
-    <div class="d-flex justify-content-between align-items-center">
-        <!-- Button trigger tambah -->
-        <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
-            <i class="fa fa-plus"></i>
-            Tambah Data
-        </button>
-
-        <!-- Button trigger print -->
-        <button onclick="window.print()" class="btn btn-outline-secondary shadow mx-2">
-            <i class="fa fa-print"></i>
-            Print
-        </button>
-
-    <!-- Search bar -->
-    <form action="" method="post" class="ml-auto">
-        <div class="input-group">
-            <input type="text" class="form-control rounded mr-2" placeholder="Masukkan Nama / NISN" aria-label="Cari" name="keyword">
-            <div class="input-group-append">
-                <button class="btn btn-primary rounded" type="submit" name="submit">
-                    <i class="fas fa-search"></i> Cari
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Button trigger tambah -->
+                <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
+                    <i class="fa fa-plus"></i>
+                    Tambah Data
                 </button>
+
+                <!-- Button trigger print -->
+                <button onclick="window.print()" class="btn btn-outline-secondary shadow mx-2">
+                    <i class="fa fa-print"></i>
+                    Print
+                </button>
+
+                <!-- Search bar -->
+                <form action="" method="post" class="ml-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control rounded mr-2" placeholder="Masukkan Nama / NISN" aria-label="Cari" name="keyword">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary rounded" type="submit" name="submit">
+                                <i class="fas fa-search"></i> Cari
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
-    </div>
-</div>
 
-<?php if (!empty($guru)): ?>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Foto</th>
-                    <th>NIP</th>
-                    <th>NAMA</th>
-                    <th>Opsi</th>
-                </tr>
-            </thead>
-            <tbody>
-    <?php $i = 1 + (10 * ($pageSekarang - 1)); ?>
-    <?php foreach ($guru as $row) : ?>
-        <tr>
-            <td scope="row"><?= $i++; ?></td>
-            <td><img width="50" src="<?= '/assets/img/guru/' . $row['gambar']; ?>" class="rounded"></td>
-            <td><?= $row['nip']; ?></td>
-            <td><?= $row['nama']; ?></td>
-            <td>
-                <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" data-gambar="<?= $row['gambar']; ?>" data-nip="<?= $row['nip']; ?>" data-nama="<?= $row['nama']; ?>"> <i class="fa fa-edit"></i> </button>
-                <a href="/guru/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-</tbody>
+        <?php if (!empty($guru)) : ?>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Foto</th>
+                        <th>NIP</th>
+                        <th>NAMA</th>
+                        <th>Opsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1 + (10 * ($pageSekarang - 1)); ?>
+                    <?php foreach ($guru as $row) : ?>
+                        <tr>
+                            <td scope="row"><?= $i++; ?></td>
+                            <td><img width="50" src="<?= '/assets/img/guru/' . $row['gambar']; ?>" class="rounded"></td>
+                            <td><?= $row['nip']; ?></td>
+                            <td><?= $row['nama']; ?></td>
+                            <td>
+                                <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" data-gambar="<?= $row['gambar']; ?>" data-nip="<?= $row['nip']; ?>" data-nama="<?= $row['nama']; ?>"> <i class="fa fa-edit"></i> </button>
+                                <a href="/guru/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
 
-        </table>
-        <?php else: ?>
-    <div class="alert alert-warning">Data tidak ditemukan.</div>
-<?php endif; ?>
+            </table>
+        <?php else : ?>
+            <div class="alert alert-warning">Data tidak ditemukan.</div>
+        <?php endif; ?>
     </div>
     <br>
     <div class="d-flex justify-content-center">
-    <?= $pager->links('guru', 'template_pager'); ?>
-</div>
+        <?= $pager->links('guru', 'template_pager'); ?>
+    </div>
 </div>
 <!-- /.container-fluid -->
 
@@ -121,7 +121,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?php if (session()->getFlashdata('err')): ?>
+                <?php if (session()->getFlashdata('err')) : ?>
                     <div class="alert alert-danger">
                         <?= session()->getFlashdata('err') ?>
                     </div>
@@ -160,10 +160,10 @@
             </div>
             <div class="modal-body">
                 <form action="<?= base_url('guru/ubah'); ?>" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" id="id-guru">
-                <div class="form-group mb-2">
-                    <input type="file" name="gambar" id="gambar" class="dropify" data-height="100" data-default-file="<?= '/assets/img/guru/default.png'?>">
-                </div>
+                    <input type="hidden" name="id" id="id-guru">
+                    <div class="form-group mb-2">
+                        <input type="file" name="gambar" id="gambar" class="dropify" data-height="100" data-default-file="<?= '/assets/img/guru/default.png' ?>">
+                    </div>
                     <div class="form-group mb-2">
                         <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan nip" value="<?= old('nip') ?>">
                     </div>

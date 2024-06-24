@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\M_Siswa;
 
 class Home extends BaseController
@@ -11,7 +12,7 @@ class Home extends BaseController
         helper('sn');
         $this->siswa_m = new M_Siswa();
     }
-    
+
     public function index()
     {
         $data = [

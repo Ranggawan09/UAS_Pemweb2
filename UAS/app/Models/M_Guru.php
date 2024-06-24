@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Controllers\Guru;
 use CodeIgniter\Model;
 
 class M_Guru extends Model
@@ -25,7 +24,7 @@ class M_Guru extends Model
     public function search($katakunci)
     {
         return $this->table('guru')->like('nama', $katakunci)
-        ->orLike('nip', $katakunci);
+            ->orLike('nip', $katakunci);
     }
 
     public function tambah($data)
@@ -39,12 +38,11 @@ class M_Guru extends Model
     }
 
     public function getGambarById($id)
-{
-    return $this->db->table('guru')->select('gambar')->where('id', $id)->get()->getRowArray()['gambar'];
-}
-public function getNipById($id)
-{
-    return $this->db->table('guru')->select('nip')->where('id', $id)->get()->getRowArray()['nip'];
-}
-
+    {
+        return $this->db->table('guru')->select('gambar')->where('id', $id)->get()->getRowArray()['gambar'];
+    }
+    public function getNipById($id)
+    {
+        return $this->db->table('guru')->select('nip')->where('id', $id)->get()->getRowArray()['nip'];
+    }
 }

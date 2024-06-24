@@ -15,6 +15,6 @@ class Admin extends BaseController
         ];
         tampilan('admin/profile', $data);
         // Load view untuk menampilkan profil admin
-        
+
     }
 }

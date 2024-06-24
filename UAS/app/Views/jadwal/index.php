@@ -16,17 +16,17 @@
             }
 
             .navbar-nav,
-            .card-header, 
+            .card-header,
             .btn,
-            .pagination, 
+            .pagination,
             th:nth-child(7),
             td:nth-child(7),
-            footer, 
+            footer,
             a#debug-icon-link {
                 display: none;
             }
         }
-     </style>
+    </style>
 
     <div class="row">
         <div class="col-md-6">
@@ -39,80 +39,78 @@
     </div>
 
     <div class="card">
-    <div class="card-header">
-    <div class="d-flex justify-content-between align-items-center">
-        <!-- Button trigger tambah -->
-        <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
-            <i class="fa fa-plus"></i>
-            Tambah Data
-        </button>
-
-        <!-- Button trigger print -->
-        <button onclick="window.print()" class="btn btn-outline-secondary shadow mx-2">
-            <i class="fa fa-print"></i>
-            Print
-        </button>
-
-    <!-- Search bar -->
-    <form action="" method="post" class="ml-auto">
-        <div class="input-group">
-            <input type="text" class="form-control rounded mr-2" placeholder="Masukkan mapel / hari / Kelas" aria-label="Cari" name="keyword">
-            <div class="input-group-append">
-                <button class="btn btn-primary rounded" type="submit" name="submit">
-                    <i class="fas fa-search"></i> Cari
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Button trigger tambah -->
+                <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
+                    <i class="fa fa-plus"></i>
+                    Tambah Data
                 </button>
+
+                <!-- Button trigger print -->
+                <button onclick="window.print()" class="btn btn-outline-secondary shadow mx-2">
+                    <i class="fa fa-print"></i>
+                    Print
+                </button>
+
+                <!-- Search bar -->
+                <form action="" method="post" class="ml-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control rounded mr-2" placeholder="Masukkan mapel / hari / Kelas" aria-label="Cari" name="keyword">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary rounded" type="submit" name="submit">
+                                <i class="fas fa-search"></i> Cari
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
+
+        <?php if (!empty($jadwal)) : ?>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>HARI</th>
+                            <th>MAPEL</th>
+                            <th>Guru Pengajar</th>
+                            <th>KELAS</th>
+                            <th>JAM</th>
+                            <th>Opsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1 + (10 * ($pageSekarang - 1)); ?>
+                        <?php foreach ($jadwal as $row) : ?>
+                            <tr>
+                                <td scope="row"><?= $i++; ?></td>
+                                <td><?= $row['hari']; ?></td>
+                                <td><?= $row['mapel']; ?></td>
+                                <td><?= isset($row['nama_guru']) ? $row['nama_guru'] : 'Tidak ada'; ?></td>
+                                <td><?= $row['kelas']; ?></td>
+                                <td><?= $row['jam']; ?></td>
+                                <td>
+                                    <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" data-hari="<?= $row['hari']; ?>" data-mapel="<?= $row['mapel']; ?>" data-guru="<?= $row['guru_id']; ?>" data-kelas="<?= $row['kelas']; ?>" data-jam="<?= $row['jam']; ?>"> <i class="fa fa-edit"></i> </button>
+                                    <a href="/jadwal/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else : ?>
+                <div class="alert alert-warning">Data tidak ditemukan.</div>
+
+            <?php endif; ?>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center">
+                <?= $pager->links('jadwal', 'template_pager'); ?>
+            </div>
+
     </div>
-</div>
-
-<?php if (!empty($jadwal)): ?>
-    <div class="card-body">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>HARI</th>
-                    <th>MAPEL</th>
-                    <th>Guru Pengajar</th>
-                    <th>KELAS</th>
-                    <th>JAM</th>
-                    <th>Opsi</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php $i = 1 + (10 * ($pageSekarang - 1)); ?>
-                <?php foreach ($jadwal as $row) : ?>
-                    <tr>
-                        <td scope="row"><?= $i++; ?></td>
-                        <td><?= $row['hari']; ?></td>
-                        <td><?= $row['mapel']; ?></td>
-                        <td><?= isset($row['nama_guru']) ? $row['nama_guru'] : 'Tidak ada'; ?></td>
-                        <td><?= $row['kelas']; ?></td>
-                        <td><?= $row['jam']; ?></td>
-                        <td>
-                            <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" 
-                            data-hari="<?= $row['hari']; ?>" data-mapel="<?= $row['mapel']; ?>" data-guru="<?= $row['nama_guru']; ?>" data-kelas="<?= $row['kelas']; ?>"
-                            data-jam="<?= $row['jam']; ?>"> <i class="fa fa-edit"></i> </button>
-                            <a href="/jadwal/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <?php else: ?>
-<div class="alert alert-warning">Data tidak ditemukan.</div>
-
-<?php endif; ?>
-        </div>
-        <br>
-        <div class="d-flex justify-content-center">
-    <?= $pager->links('jadwal', 'template_pager'); ?>
-    </div>
-
-</div>
-<!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 
 </div>
 <!-- End of Main Content -->
@@ -130,23 +128,21 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                
+
                     <form action="<?= base_url("jadwal/tambah"); ?>" method="post">
-                    <?php if (session()->getFlashdata('err')): ?>
-                    <div class="alert alert-danger">
-                        <?= session()->getFlashdata('err') ?>
-                    </div>
-                <?php endif; ?>
-                <input type="hidden" name="page_jadwal" value="<?= $pageSekarang ?>">
+                        <input type="hidden" name="page_jadwal" value="<?= $pageSekarang ?>">
                         <div class="form-group mb-0">
                             <input type="text" name="hari" id="hari" class="form-control" placeholder="Masukkan Hari">
                         </div>
-                        <br>
+                        <label for="mapel"></label>
                         <div class="form-group mb-0">
                             <input type="text" name="mapel" id="mapel" class="form-control" placeholder="Masukkan Mata Pelajaran">
                         </div>
+                        <label for="guru_id"></label>
                         <div class="form-group mb-0">
-                            <input type="text" name="nama_guru" id="nama_guru" class="form-control" placeholder="Masukkan Guru Pengajar">
+                            <select name="guru_id" id="guru_id" class="form-control">
+                                <option value="">Pilih Guru Pengajar</option>
+                            </select>
                         </div>
                         <div class="form-group mb-0">
                             <label for="kelas"></label>
@@ -154,7 +150,7 @@
                         </div>
                         <div class="form-group mb-0">
                             <label for="jam"></label>
-                            <input type="text" name="jam" id="jam" class="form-control" placeholder="Masukkan jam Pelajaran">
+                            <input type="text" name="jam" id="jam" class="form-control" placeholder="Masukkan Jam Pelajaran">
                         </div>
                 </div>
             </div>
@@ -166,6 +162,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Modal Ubah Data -->
 <div class="modal fade" id="modalUbah">
@@ -190,9 +187,11 @@
                             <label for="mapel"></label>
                             <input type="text" name="mapel" id="mapel" class="form-control" placeholder="Masukkan mapel" value="<?= old('mapel') ?>">
                         </div>
+                        <label for="guru_id"></label>
                         <div class="form-group mb-0">
-                            <label for="nama_guru"></label>
-                            <input type="text" name="nama_guru" id="nama_guru" class="form-control" placeholder="Masukkan Guru Pengajar" value="<?= old('nama_guru') ?>">
+                            <select name="guru_id" id="guru_id" class="form-control">
+                                <option value="<?= old('guru_id') ?>">Pilih Guru Pengajar</option>
+                            </select>
                         </div>
                         <div class="form-group mb-0">
                             <label for="kelas"></label>
@@ -212,3 +211,23 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#modalTambah').on('show.bs.modal', function() {
+            $.ajax({
+                url: '<?= base_url("guru/getAll"); ?>',
+                method: 'GET',
+                success: function(data) {
+                    var guruSelect = $('#guru_id');
+                    guruSelect.empty();
+                    guruSelect.append('<option value="">Pilih Guru Pengajar</option>');
+                    $.each(data, function(key, value) {
+                        guruSelect.append('<option value="' + value.id + '">' + value.nama + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>

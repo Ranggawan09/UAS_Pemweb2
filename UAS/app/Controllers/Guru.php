@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
 use App\Models\M_Guru;
 
 class Guru extends BaseController
@@ -15,32 +14,36 @@ class Guru extends BaseController
         helper('sn');
     }
 
-    public function index()
-{
-    // Mendapatkan halaman saat ini
-    $pageSekarang = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : 1;
-
-    // Mendapatkan kata kunci pencarian
-    $katakunci = $this->request->getVar('keyword');
-    if ($katakunci) {
-        $guru = $this->guru_m->search($katakunci);
-    } else {
-        $guru = $this->guru_m;
+    public function getAll()
+    {
+        $data = $this->guru_m->findAll();
+        return $this->response->setJSON($data);
     }
 
-    // Mengatur data untuk view
-    $data = [
-        'judul' => 'Data Guru',
-        'guru' => $guru->paginate(10, 'guru'),
-        'pager' => $guru->pager,
-        'pageSekarang' => $pageSekarang
-    ];
+    public function index()
+    {
+        // Mendapatkan halaman saat ini
+        $pageSekarang = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : 1;
 
-    // Memuat view
-    tampilan('guru/index', $data);
-}
+        // Mendapatkan kata kunci pencarian
+        $katakunci = $this->request->getVar('keyword');
+        if ($katakunci) {
+            $guru = $this->guru_m->search($katakunci);
+        } else {
+            $guru = $this->guru_m;
+        }
 
+        // Mengatur data untuk view
+        $data = [
+            'judul' => 'Data Guru',
+            'guru' => $guru->paginate(10, 'guru'),
+            'pager' => $guru->pager,
+            'pageSekarang' => $pageSekarang
+        ];
 
+        // Memuat view
+        tampilan('guru/index', $data);
+    }
 
     public function hapus($id)
     {
@@ -62,26 +65,26 @@ class Guru extends BaseController
     }
 
     public function tambah()
-{
-    if (isset($_POST['tambah'])) {
-        $val = $this->validate([
-            'gambar' => [
-                'rules' => 'is_image[gambar]|mime_in[gambar,image/png,image/jpg,image/jpeg]|max_size[gambar,4024]',
-            ],
-            'nip' => [
-                'label' => 'Nomor Induk Pegawai',
-                'rules' => 'required|numeric|is_unique[guru.nip]'
-            ],
-            'nama' => [
-                'label' => 'Nama guru',
-                'rules' => 'required'
-            ]
-        ]);
+    {
+        if (isset($_POST['tambah'])) {
+            $val = $this->validate([
+                'gambar' => [
+                    'rules' => 'is_image[gambar]|mime_in[gambar,image/png,image/jpg,image/jpeg]|max_size[gambar,4024]',
+                ],
+                'nip' => [
+                    'label' => 'Nomor Induk Pegawai',
+                    'rules' => 'required|numeric|is_unique[guru.nip]'
+                ],
+                'nama' => [
+                    'label' => 'Nama guru',
+                    'rules' => 'required'
+                ]
+            ]);
 
-        if (!$val) {
-            session()->setFlashdata('err', \Config\Services::validation()->listErrors());
-            $page = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : 1;
-                
+            if (!$val) {
+                session()->setFlashdata('err', \Config\Services::validation()->listErrors());
+                $page = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : 1;
+
                 $data = [
                     'judul' => 'Data Guru',
                     'guru' => $this->guru_m->paginate(10, 'guru'),
@@ -90,39 +93,39 @@ class Guru extends BaseController
                 ];
                 //load view
                 tampilan('guru/index', $data);
-        } else {
-            // Ambil file gambar
-            $gambar = $this->request->getFile('gambar');
-
-            // Cek apakah ada gambar yang diunggah
-            if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
-                // Jika ada gambar, beri nama acak dan pindahkan ke folder tujuan
-                $newGambar = $gambar->getRandomName();
-                $gambar->move('./assets/img/guru', $newGambar);
             } else {
-                // Jika tidak ada gambar, gunakan gambar default
-                $newGambar = 'default.png';
-            }
+                // Ambil file gambar
+                $gambar = $this->request->getFile('gambar');
 
-            $data = [
-                'nip' => $this->request->getPost('nip'),
-                'nama' => $this->request->getPost('nama'),
-                'gambar' => $newGambar
-            ];
+                // Cek apakah ada gambar yang diunggah
+                if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
+                    // Jika ada gambar, beri nama acak dan pindahkan ke folder tujuan
+                    $newGambar = $gambar->getRandomName();
+                    $gambar->move('./assets/img/guru', $newGambar);
+                } else {
+                    // Jika tidak ada gambar, gunakan gambar default
+                    $newGambar = 'default.png';
+                }
 
-            //insert data
-            $success = $this->guru_m->tambah($data);
-            if ($success) {
-                session()->setFlashdata('message', 'Ditambahkan');
-                // Dapatkan halaman saat ini dari URL atau setel ke 1 jika tidak ada
-                $page = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : 1;
-                return redirect()->to(base_url('guru?page_guru=' . $page));
+                $data = [
+                    'nip' => $this->request->getPost('nip'),
+                    'nama' => $this->request->getPost('nama'),
+                    'gambar' => $newGambar
+                ];
+
+                //insert data
+                $success = $this->guru_m->tambah($data);
+                if ($success) {
+                    session()->setFlashdata('message', 'Ditambahkan');
+                    // Dapatkan halaman saat ini dari URL atau setel ke 1 jika tidak ada
+                    $page = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : 1;
+                    return redirect()->to(base_url('guru?page_guru=' . $page));
+                }
             }
+        } else {
+            return redirect()->to(base_url('guru'));
         }
-    } else {
-        return redirect()->to(base_url('guru'));
     }
-}
 
 
     public function ubah()
@@ -136,8 +139,8 @@ class Guru extends BaseController
             if ($nip === $db_nip) {
                 $val = $this->validate([
                     'gambar' => [
-                    'rules' => 'max_size[gambar,4024]|mime_in[gambar,image/png,image/jpeg]|is_image[gambar]',
-                ],
+                        'rules' => 'max_size[gambar,4024]|mime_in[gambar,image/png,image/jpeg]|is_image[gambar]',
+                    ],
                     'nip' => [
                         'label' => 'Nomor Induk Pegawai',
                         'rules' => 'required|numeric'
@@ -150,8 +153,8 @@ class Guru extends BaseController
             } else {
                 $val = $this->validate([
                     'gambar' => [
-                    'rules' => 'max_size[gambar,4024]|mime_in[gambar,image/png,image/jpeg]|is_image[gambar]',
-                ],
+                        'rules' => 'max_size[gambar,4024]|mime_in[gambar,image/png,image/jpeg]|is_image[gambar]',
+                    ],
                     'nip' => [
                         'label' => 'Nomor Induk guru Nasional',
                         'rules' => 'required|is_unique[guru.nip]|numeric'
@@ -166,7 +169,7 @@ class Guru extends BaseController
                 session()->setFlashdata('err', \Config\Services::validation()->listErrors());
 
                 $page = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : 1;
-                
+
                 $data = [
                     'judul' => 'Data Guru',
                     'guru' => $this->guru_m->paginate(10, 'guru'),
@@ -201,13 +204,12 @@ class Guru extends BaseController
                 if ($success) {
                     session()->setFlashdata('message', 'Diubah');
                     // Dapatkan halaman saat ini dari URL atau setel ke 1 jika tidak ada
-                $page = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : "";
-                return redirect()->to(base_url('guru?page_guru=' . $page));
+                    $page = $this->request->getVar('page_guru') ? $this->request->getVar('page_guru') : "";
+                    return redirect()->to(base_url('guru?page_guru=' . $page));
                 }
             }
         } else {
             return redirect()->to(base_url('guru'));
         }
     }
-
 }

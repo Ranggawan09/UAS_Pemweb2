@@ -16,17 +16,17 @@
             }
 
             .navbar-nav,
-            .card-header, 
+            .card-header,
             .btn,
-            .pagination, 
+            .pagination,
             th:nth-child(5),
             td:nth-child(5),
-            footer, 
+            footer,
             a#debug-icon-link {
                 display: none;
             }
         }
-     </style>
+    </style>
 
     <div class="row">
         <div class="col-md-6">
@@ -39,78 +39,74 @@
     </div>
 
     <div class="card">
-    <div class="card-header">
-    <div class="d-flex justify-content-between align-items-center">
-        <!-- Button trigger tambah -->
-        <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
-            <i class="fa fa-plus"></i>
-            Tambah Data
-        </button>
-
-        <!-- Button trigger print -->
-        <button onclick="window.print()" class="btn btn-outline-secondary shadow mx-2">
-            <i class="fa fa-print"></i>
-            Print
-        </button>
-
-    <!-- Search bar -->
-    <form action="" method="post" class="ml-auto">
-        <div class="input-group">
-            <input type="text" class="form-control rounded mr-2" placeholder="Masukkan Nama / NISN / Kelas" aria-label="Cari" name="keyword">
-            <div class="input-group-append">
-                <button class="btn btn-primary rounded" type="submit" name="submit">
-                    <i class="fas fa-search"></i> Cari
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Button trigger tambah -->
+                <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modalTambah" id="btn-tambah">
+                    <i class="fa fa-plus"></i>
+                    Tambah Data
                 </button>
+
+                <!-- Button trigger print -->
+                <button onclick="window.print()" class="btn btn-outline-secondary shadow mx-2">
+                    <i class="fa fa-print"></i>
+                    Print
+                </button>
+
+                <!-- Search bar -->
+                <form action="" method="post" class="ml-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control rounded mr-2" placeholder="Masukkan Nama / NISN / Kelas" aria-label="Cari" name="keyword">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary rounded" type="submit" name="submit">
+                                <i class="fas fa-search"></i> Cari
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
-    </div>
-</div>
 
-<?php if (!empty($siswa)): ?>
-    <div class="card-body">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>NISN</th>
-                    <th>NAMA</th>
-                    <th>KELAS</th>
-                    <th>Opsi</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php $i = 1 + (10 * ($pageSekarang - 1)); ?>
-                <?php foreach ($siswa as $row) : ?>
-                    <tr>
-                        <td scope="row"><?= $i++; ?></td>
-                        <td><?= $row['nisn']; ?></td>
-                        <td><?= $row['nama']; ?></td>
-                        <td><?= $row['kelas']; ?></td>
-                        <td>
-                            <button type="button" data-toggle="modal" data-target="#modalDetail" id="btn-detail" class="btn btn-sm btn-success" 
-                            data-id="<?= $row['id']; ?>" data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data-kelas="<?= $row['kelas']; ?>"
-                            data-alamat="<?= $row['alamat']; ?>" data-telepon="<?= $row['telepon']; ?>"> <i class="fa fa-info"></i> </button>
+        <?php if (!empty($siswa)) : ?>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NISN</th>
+                            <th>NAMA</th>
+                            <th>KELAS</th>
+                            <th>Opsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1 + (10 * ($pageSekarang - 1)); ?>
+                        <?php foreach ($siswa as $row) : ?>
+                            <tr>
+                                <td scope="row"><?= $i++; ?></td>
+                                <td><?= $row['nisn']; ?></td>
+                                <td><?= $row['nama']; ?></td>
+                                <td><?= $row['kelas']; ?></td>
+                                <td>
+                                    <button type="button" data-toggle="modal" data-target="#modalDetail" id="btn-detail" class="btn btn-sm btn-success" data-id="<?= $row['id']; ?>" data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data-kelas="<?= $row['kelas']; ?>" data-alamat="<?= $row['alamat']; ?>" data-telepon="<?= $row['telepon']; ?>"> <i class="fa fa-info"></i> </button>
 
-                            <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" 
-                            data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data-kelas="<?= $row['kelas']; ?>"
-                            data-alamat="<?= $row['alamat']; ?>" data-telepon="<?= $row['telepon']; ?>"> <i class="fa fa-edit"></i> </button>
-                            <a href="/siswa/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <?php else: ?>
-<div class="alert alert-warning">Data tidak ditemukan.</div>
-<?php endif; ?>
-        </div>
-</div>
-<br>
-        <div class="d-flex justify-content-center">
-    <?= $pager->links('siswa', 'template_pager'); ?>
+                                    <button type="button" data-toggle="modal" data-target="#modalUbah" id="btn-edit" class="btn btn-sm btn-warning" data-id="<?= $row['id']; ?>" data-nisn="<?= $row['nisn']; ?>" data-nama="<?= $row['nama']; ?>" data-kelas="<?= $row['kelas']; ?>" data-alamat="<?= $row['alamat']; ?>" data-telepon="<?= $row['telepon']; ?>"> <i class="fa fa-edit"></i> </button>
+                                    <a href="/siswa/hapus/<?= $row['id']; ?>" class="btn btn-sm btn-danger btn-hapus"> <i class="fa fa-trash-alt"></i> </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else : ?>
+                <div class="alert alert-warning">Data tidak ditemukan.</div>
+            <?php endif; ?>
+            </div>
     </div>
-<!-- /.container-fluid -->
+    <br>
+    <div class="d-flex justify-content-center">
+        <?= $pager->links('siswa', 'template_pager'); ?>
+    </div>
+    <!-- /.container-fluid -->
 
 </div>
 <!-- End of Main Content -->
@@ -128,14 +124,14 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                
+
                     <form action="<?= base_url("siswa/tambah"); ?>" method="post">
-                    <?php if (session()->getFlashdata('err')): ?>
-                    <div class="alert alert-danger">
-                        <?= session()->getFlashdata('err') ?>
-                    </div>
-                <?php endif; ?>
-                <input type="hidden" name="page_siswa" value="<?= $pageSekarang ?>">
+                        <?php if (session()->getFlashdata('err')) : ?>
+                            <div class="alert alert-danger">
+                                <?= session()->getFlashdata('err') ?>
+                            </div>
+                        <?php endif; ?>
+                        <input type="hidden" name="page_siswa" value="<?= $pageSekarang ?>">
                         <div class="form-group mb-0">
                             <input type="text" name="nisn" id="nisn" class="form-control" placeholder="Masukkan NISN">
                         </div>

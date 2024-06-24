@@ -8,7 +8,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use App\Exceptions\AuthenticationException;
 
 /**
  * Class BaseController
@@ -68,6 +67,4 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
         session();
     }
-    
-
 }

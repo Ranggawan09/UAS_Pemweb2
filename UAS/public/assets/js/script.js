@@ -22,7 +22,7 @@ $(document).on("click", "#btn-edit", function () {
   $(".modal-body #id-jadwal").val($(this).data("id"));
   $(".modal-body #hari").val($(this).data("hari"));
   $(".modal-body #mapel").val($(this).data("mapel"));
-  $(".modal-body #nama_guru").val($(this).data("guru"));
+  $(".modal-body #guru_id").val($(this).data("guru"));
   $(".modal-body #kelas").val($(this).data("kelas"));
   $(".modal-body #jam").val($(this).data("jam"));
 });
@@ -66,6 +66,7 @@ if (swal) {
   });
 }
 
+//hapus
 $(document).on("click", ".btn-hapus", function (e) {
   //hentikan aksi default
   e.preventDefault();
